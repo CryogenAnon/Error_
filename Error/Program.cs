@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO; // Don't forget to include the System.IO namespace
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -61,23 +61,38 @@ class Program
 {
     static void Main()
     {
+        // Directory path to scan for files
+        string directoryPath = "D:\\Test";
+
         // File paths
         string keyFilePath = "key.pem";
-        string inputFile = "Test1.txt";
-        string outputFile = "encrypted_output.dat";
 
         // Load the AES key from the PEM file
         Encryptor encryptor = new Encryptor(keyFilePath);
 
-        // Read the data from the input file
-        byte[] inputData = File.ReadAllBytes(inputFile);
+        // Scan the directory for files
+        string[] files = Directory.GetFiles(directoryPath);
 
-        // Encrypt the data
-        byte[] encryptedData = encryptor.EncryptData(inputData);
+        foreach (string filePath in files)
+        {
+            // Skip the key file itself
+            if (filePath.ToLower() == keyFilePath.ToLower())
+                continue;
 
-        // Save the encrypted data to the output file
-        File.WriteAllBytes(outputFile, encryptedData);
+            // Read the data from the input file
+            byte[] inputData = File.ReadAllBytes(filePath);
 
-        Console.WriteLine("Encryption completed. Encrypted data saved to " + outputFile);
+            // Encrypt the data
+            byte[] encryptedData = encryptor.EncryptData(inputData);
+
+            // Save the encrypted data to a new file with the same name and "_encrypted" suffix
+            string outputFile = Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath) + "_encrypted" + Path.GetExtension(filePath));
+            File.WriteAllBytes(outputFile, encryptedData);
+
+            // Delete the original file
+            File.Delete(filePath);
+
+            Console.WriteLine($"Encryption completed. Original file deleted. Encrypted data saved to {outputFile}");
+        }
     }
 }
